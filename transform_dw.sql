@@ -55,4 +55,28 @@ FROM sap_raw.knvv AS a
 LEFT JOIN sap_raw.kna1 AS b ON a.kunnr = b.kunnr
 ON CONFLICT(kunnr, vkorg, vtweg, spart) DO NOTHING;
 
+-- --fact_sales--
+
+INSERT INTO dw.fact_sales (vbeln, posnr, date, matnr, vkorg, client_key, fkart,
+                           quantity, vrkme, net_amount, waerk, amount_mxn, sign, is_cancelled)
+
+SELECT 
+		a.vbeln,
+		a.posnr,
+		b.fkdat as date,
+		a.matnr,
+		b.vkorg,
+		c.client_key,
+		b.fkart,
+		a.fkimg as quantity,
+		a.vrkme,
+		a.netwr as net_amount,
+		b.waerk,
+		CASE WHEN b.waerk = 'USD' THEN a.netwr * 18 ELSE a.netwr END AS amount_mxn,
+		CASE WHEN b.vbtyp = 'O' THEN -1 ELSE 1 END AS sign,
+		CASE WHEN b.fksto = 'X' THEN TRUE else FALSE END AS is_cancelled  
+FROM sap_raw.vbrp as a 
+JOIN sap_raw.vbrk as b ON a.vbeln = b.vbeln
+JOIN dw.dim_client as c ON b.kunag = c.kunnr AND b.vkorg = c.vkorg AND b.vtweg = c.vtweg AND b.spart = c.spart
+ON CONFLICT(vbeln,posnr) DO NOTHING;
 COMMIT;
