@@ -43,13 +43,13 @@ ON CONFLICT(vkorg) DO NOTHING;
 
 -- --dim_client--
 INSERT INTO dw.dim_client(kunnr,name,land,city,vkorg,vtweg,spart,customer_group)
-SELECT a.kunnr::char(10),             -- 👈 Forzamos tipo char(10)
+SELECT a.kunnr,             
 	   b.name1 AS name,
 	   b.land1 AS land,
 	   b.ort01 AS city,
-	   a.vkorg::char(4),              -- 👈 Forzamos tipo char(4)
-	   a.vtweg::char(2),              -- 👈 Forzamos tipo char(2)
-	   a.spart::char(2),              -- 👈 Forzamos tipo char(2)
+	   a.vkorg,              
+	   a.vtweg,              
+	   a.spart,              
 	   a.kdgrp AS customer_group
 FROM sap_raw.knvv AS a 
 LEFT JOIN sap_raw.kna1 AS b ON a.kunnr = b.kunnr
