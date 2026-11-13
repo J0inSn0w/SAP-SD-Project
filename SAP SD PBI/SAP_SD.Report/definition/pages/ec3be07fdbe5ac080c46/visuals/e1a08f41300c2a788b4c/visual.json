@@ -1,0 +1,137 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e1a08f41300c2a788b4c",
+  "position": {
+    "x": 26.758237156401279,
+    "y": 135.84951171711418,
+    "z": 3,
+    "height": 300.51558652573743,
+    "width": 790.39715908139169,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "# Cancelled"
+                }
+              },
+              "queryRef": "SAP Measures.# Cancelled",
+              "nativeQueryRef": "Invoices Cancelled",
+              "displayName": "Invoices Cancelled"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "% Cancelled"
+                }
+              },
+              "queryRef": "SAP Measures.% Cancelled",
+              "nativeQueryRef": "% Cancelled"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SAP Measures"
+                  }
+                },
+                "Property": "# Cancelled"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "25D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1b319e8e90d70948d120",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "# Cancelled"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "00dd06e854d7890080d1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "% Cancelled"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

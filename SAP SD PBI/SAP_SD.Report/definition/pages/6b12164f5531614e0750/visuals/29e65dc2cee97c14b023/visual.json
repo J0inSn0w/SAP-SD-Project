@@ -4,10 +4,10 @@
   "position": {
     "x": 1420.1972361589428,
     "y": 17.185112668915966,
-    "z": 6002,
+    "z": 8000,
     "height": 66.59231159204937,
     "width": 225,
-    "tabOrder": 6002
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "slicer",
@@ -54,7 +54,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "fb1615c4e5462258b654",
+        "name": "60a15a0102dc3446401c",
         "field": {
           "Column": {
             "Expression": {

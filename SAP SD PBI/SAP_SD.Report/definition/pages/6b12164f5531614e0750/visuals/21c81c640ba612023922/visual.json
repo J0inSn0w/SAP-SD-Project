@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "21c81c640ba612023922",
   "position": {
-    "x": 0,
-    "y": 16.157082748948106,
+    "x": 10.291629675538953,
+    "y": 12.349955610646745,
     "z": 6000,
-    "height": 64.628330995792425,
-    "width": 708.218793828892,
+    "height": 65.8664299234493,
+    "width": 687.48086232600212,
     "tabOrder": 6000
   },
   "visual": {
@@ -19,14 +19,13 @@
               {
                 "textRuns": [
                   {
-                    "value": "Ventas SAP SD - Resumen de ventas",
+                    "value": "Sales SAP SD - Sales Summary",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "32pt"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "center"
+                ]
               }
             ]
           }

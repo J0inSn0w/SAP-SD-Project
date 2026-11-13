@@ -1,7 +1,7 @@
 table 'SAP Measures'
 	lineageTag: 9c855777-15e1-42db-8643-975f3bb6c869
 
-	measure 'Ventas Netas MXN' =
+	measure 'Net Sales MXN' =
 			
 			SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled]),
 			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign])
@@ -9,7 +9,7 @@ table 'SAP Measures'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Ventas Brutas MXN' =
+	measure 'Gross Sales MXN' =
 			
 			SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = 1),
 			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign])
@@ -17,7 +17,7 @@ table 'SAP Measures'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Devoluciones MXN' =
+	measure 'Returns MXN' =
 			
 			ABS(SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = -1),
 			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign]))
@@ -25,22 +25,26 @@ table 'SAP Measures'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure '% Devolución' = DIVIDE([Devoluciones MXN],[Ventas Brutas MXN])
+	measure '% Returns' = DIVIDE([Returns MXN],[Gross Sales MXN])
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: fa7db294-a032-40fb-8b11-55dd913a7d9b
 
-	measure '# Facturas' = DISTINCTCOUNT('dw fact_sales'[vbeln])
+	measure '# Invoices' = DISTINCTCOUNT('dw fact_sales'[vbeln])
 		formatString: 0
 		lineageTag: aaa7b8fc-4c61-4356-9449-f3866793a700
 
-	measure '# Canceladas' = CALCULATE(DISTINCTCOUNT('dw fact_sales'[vbeln]),'dw fact_sales'[is_cancelled])
+	measure '# Cancelled' = CALCULATE(DISTINCTCOUNT('dw fact_sales'[vbeln]),'dw fact_sales'[is_cancelled])
 		formatString: 0
 		lineageTag: b1e14120-1efb-456e-831f-050910c97db3
 
-	measure 'Ticket Promedio' = DIVIDE([Ventas Netas MXN], [# Facturas])
+	measure 'Average Ticket' = DIVIDE([Net Sales MXN], [# Invoices])
 		lineageTag: c4f78d9e-c7b8-43f3-9d02-c98e58e977d9
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Cancelled' = DIVIDE( [# Cancelled], [# Invoices])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 25ee1fd3-bed6-4e32-82bd-beafd5f800f6
 
 	partition 'SAP Measures' = m
 		mode: import
@@ -51,8 +55,6 @@ table 'SAP Measures'
 				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
 				in
 				    #"Columnas quitadas"
-
-	changedProperty = Name
 
 	annotation PBI_ResultType = Table
 

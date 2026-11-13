@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ad94a4c9b000ea57ebec",
   "position": {
-    "x": 1166.4395224026712,
-    "y": 17.185112668915966,
-    "z": 6001,
-    "height": 66.59231159204937,
-    "width": 225.55460377952207,
-    "tabOrder": 6001
+    "x": 1148.5458717901472,
+    "y": 16.466607480862326,
+    "z": 7000,
+    "height": 67.924755858557091,
+    "width": 242.8824603427193,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "slicer",
@@ -17,80 +17,79 @@
           "projections": [
             {
               "field": {
-                "HierarchyLevel": {
+                "Column": {
                   "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "dw dim_calendar"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "date"
-                        }
-                      },
-                      "Hierarchy": "Jerarquía de fechas"
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
                     }
                   },
-                  "Level": "Año"
+                  "Property": "year"
                 }
               },
-              "queryRef": "dw dim_calendar.date.Variation.Jerarquía de fechas.Año",
-              "nativeQueryRef": "date Año",
+              "queryRef": "dw dim_calendar.year",
+              "nativeQueryRef": "year",
               "active": true
             },
             {
               "field": {
-                "HierarchyLevel": {
+                "Column": {
                   "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "dw dim_calendar"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "date"
-                        }
-                      },
-                      "Hierarchy": "Jerarquía de fechas"
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
                     }
                   },
-                  "Level": "Mes"
+                  "Property": "quarter"
                 }
               },
-              "queryRef": "dw dim_calendar.date.Variation.Jerarquía de fechas.Mes",
-              "nativeQueryRef": "date Mes",
-              "active": true
+              "queryRef": "dw dim_calendar.quarter",
+              "nativeQueryRef": "quarter",
+              "active": false
             },
             {
               "field": {
-                "HierarchyLevel": {
+                "Column": {
                   "Expression": {
-                    "Hierarchy": {
-                      "Expression": {
-                        "PropertyVariationSource": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "dw dim_calendar"
-                            }
-                          },
-                          "Name": "Variation",
-                          "Property": "date"
-                        }
-                      },
-                      "Hierarchy": "Jerarquía de fechas"
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
                     }
                   },
-                  "Level": "Día"
+                  "Property": "month_name"
                 }
               },
-              "queryRef": "dw dim_calendar.date.Variation.Jerarquía de fechas.Día",
-              "nativeQueryRef": "date Día",
+              "queryRef": "dw dim_calendar.month_name",
+              "nativeQueryRef": "month",
+              "active": false,
+              "displayName": "month"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
+                    }
+                  },
+                  "Property": "week_of_year"
+                }
+              },
+              "queryRef": "dw dim_calendar.week_of_year",
+              "nativeQueryRef": "week",
+              "active": false,
+              "displayName": "week"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
+                    }
+                  },
+                  "Property": "date"
+                }
+              },
+              "queryRef": "dw dim_calendar.date",
+              "nativeQueryRef": "date",
               "active": false
             }
           ]
@@ -105,7 +104,7 @@
         "levels": [
           {
             "queryRefs": [
-              "dw dim_calendar.date.Variation.Jerarquía de fechas.Año"
+              "dw dim_calendar.year"
             ],
             "isCollapsed": true,
             "identityKeys": [
@@ -113,10 +112,10 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "LocalDateTable_9ed8fda1-310d-4ef4-8c8a-abbdce897a25"
+                      "Entity": "dw dim_calendar"
                     }
                   },
-                  "Property": "Año"
+                  "Property": "year"
                 }
               }
             ],
@@ -124,32 +123,58 @@
           },
           {
             "queryRefs": [
-              "dw dim_calendar.date.Variation.Jerarquía de fechas.Mes"
+              "dw dim_calendar.quarter"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
+                    }
+                  },
+                  "Property": "quarter"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "dw dim_calendar.month_name"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_calendar"
+                    }
+                  },
+                  "Property": "month_name"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "dw dim_calendar.week_of_year"
             ],
             "isCollapsed": true,
             "isPinned": true
           },
           {
             "queryRefs": [
-              "dw dim_calendar.date.Variation.Jerarquía de fechas.Día"
+              "dw dim_calendar.date"
             ],
-            "isCollapsed": true
+            "isCollapsed": true,
+            "isPinned": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "2026L"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "objects": {
@@ -177,76 +202,71 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "783676e16c6eb6910751",
+        "name": "7584096029664004c49c",
         "field": {
-          "HierarchyLevel": {
+          "Column": {
             "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "dw dim_calendar"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "date"
-                  }
-                },
-                "Hierarchy": "Jerarquía de fechas"
+              "SourceRef": {
+                "Entity": "dw dim_calendar"
               }
             },
-            "Level": "Año"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f4104d37ce00034d5d73",
-        "field": {
-          "HierarchyLevel": {
-            "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "dw dim_calendar"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "date"
-                  }
-                },
-                "Hierarchy": "Jerarquía de fechas"
-              }
-            },
-            "Level": "Mes"
+            "Property": "date"
           }
         },
         "type": "Categorical"
       },
       {
-        "name": "4f7672b6ee73132295a1",
+        "name": "a3cab2c831c4a0e14400",
         "field": {
-          "HierarchyLevel": {
+          "Column": {
             "Expression": {
-              "Hierarchy": {
-                "Expression": {
-                  "PropertyVariationSource": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "dw dim_calendar"
-                      }
-                    },
-                    "Name": "Variation",
-                    "Property": "date"
-                  }
-                },
-                "Hierarchy": "Jerarquía de fechas"
+              "SourceRef": {
+                "Entity": "dw dim_calendar"
               }
             },
-            "Level": "Día"
+            "Property": "month_name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "399239e6128b0631ea2b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_calendar"
+              }
+            },
+            "Property": "year"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bed219a4100c00b5c8ea",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_calendar"
+              }
+            },
+            "Property": "quarter"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cd0c3469d3ec2a2e3222",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_calendar"
+              }
+            },
+            "Property": "week_of_year"
           }
         },
         "type": "Advanced"

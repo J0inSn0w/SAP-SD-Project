@@ -4,10 +4,10 @@
   "position": {
     "x": 1673.4003461356924,
     "y": 15.036973585301471,
-    "z": 6003,
+    "z": 9000,
     "height": 66.59231159204937,
     "width": 225,
-    "tabOrder": 6003
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "slicer",
@@ -50,23 +50,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "02c66197b88944aeecd2",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dw dim_client"
-              }
-            },
-            "Property": "customer_group"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

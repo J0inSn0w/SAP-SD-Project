@@ -72,11 +72,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "Ventas Netas MXN"
+                  "Property": "Net Sales MXN"
                 }
               },
               "queryRef": "SAP Measures.Ventas Netas MXN",
-              "nativeQueryRef": "Ventas Netas MXN"
+              "nativeQueryRef": "Net Sales MXN"
             }
           ]
         },
@@ -90,11 +90,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "% Devolución"
+                  "Property": "% Returns"
                 }
               },
               "queryRef": "SAP Measures.% Devolución",
-              "nativeQueryRef": "% Devolución"
+              "nativeQueryRef": "% Returns"
             }
           ]
         }

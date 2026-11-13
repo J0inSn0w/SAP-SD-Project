@@ -3,7 +3,7 @@
   "name": "0ea4d291565b4092376b",
   "position": {
     "x": 0,
-    "y": 81.629285177350837,
+    "y": 80.274711469203837,
     "z": 0,
     "height": 135.33276226771324,
     "width": 1920.4363407513592,
@@ -23,11 +23,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "Ventas Netas MXN"
+                  "Property": "Net Sales MXN"
                 }
               },
               "queryRef": "SAP Measures.Ventas Netas MXN",
-              "nativeQueryRef": "Ventas Netas MXN"
+              "nativeQueryRef": "Net Sales MXN"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "Devoluciones MXN"
+                  "Property": "Returns MXN"
                 }
               },
               "queryRef": "SAP Measures.Devoluciones MXN",
-              "nativeQueryRef": "Devoluciones MXN"
+              "nativeQueryRef": "Returns MXN"
             },
             {
               "field": {
@@ -51,11 +51,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "% Devolución"
+                  "Property": "% Returns"
                 }
               },
               "queryRef": "SAP Measures.% Devolución",
-              "nativeQueryRef": "% Devolución"
+              "nativeQueryRef": "% Returns"
             },
             {
               "field": {
@@ -65,11 +65,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "# Facturas"
+                  "Property": "# Invoices"
                 }
               },
               "queryRef": "SAP Measures.# Facturas",
-              "nativeQueryRef": "# Facturas"
+              "nativeQueryRef": "# Invoices"
             }
           ]
         }
@@ -84,7 +84,7 @@
                     "Entity": "SAP Measures"
                   }
                 },
-                "Property": "Ventas Netas MXN"
+                "Property": "Net Sales MXN"
               }
             },
             "direction": "Descending"
@@ -98,7 +98,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "edb5d39f2096e9878908",
+        "name": "e07290a2eabee325623a",
         "field": {
           "Measure": {
             "Expression": {
@@ -106,13 +106,13 @@
                 "Entity": "SAP Measures"
               }
             },
-            "Property": "Ventas Netas MXN"
+            "Property": "Net Sales MXN"
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "7ee65f45a08a5dd2554b",
+        "name": "57c8f1300ec443841b00",
         "field": {
           "Measure": {
             "Expression": {
@@ -120,13 +120,13 @@
                 "Entity": "SAP Measures"
               }
             },
-            "Property": "Devoluciones MXN"
+            "Property": "Returns MXN"
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "99eff7b9c00a906a5e21",
+        "name": "3e363d885d95d2c09756",
         "field": {
           "Measure": {
             "Expression": {
@@ -134,13 +134,13 @@
                 "Entity": "SAP Measures"
               }
             },
-            "Property": "% Devolución"
+            "Property": "% Returns"
           }
         },
         "type": "Advanced"
       },
       {
-        "name": "5aba1e819cc20862c3bb",
+        "name": "34c4d56b1b2b50b0355a",
         "field": {
           "Measure": {
             "Expression": {
@@ -148,7 +148,7 @@
                 "Entity": "SAP Measures"
               }
             },
-            "Property": "# Facturas"
+            "Property": "# Invoices"
           }
         },
         "type": "Advanced"

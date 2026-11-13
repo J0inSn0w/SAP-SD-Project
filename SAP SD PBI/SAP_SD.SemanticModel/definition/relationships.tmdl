@@ -1,8 +1,3 @@
-relationship 92c33161-5f27-4b44-9347-b32a8fdeea36
-	joinOnDateBehavior: datePartOnly
-	fromColumn: 'dw dim_calendar'.date
-	toColumn: LocalDateTable_9ed8fda1-310d-4ef4-8c8a-abbdce897a25.Date
-
 relationship 844c6f59-6b57-4e69-b47a-94d6152b3a11
 	fromColumn: 'dw fact_sales'.date
 	toColumn: 'dw dim_calendar'.date

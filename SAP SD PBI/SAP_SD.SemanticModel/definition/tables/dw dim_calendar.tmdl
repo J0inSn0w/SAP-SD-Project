@@ -3,15 +3,10 @@ table 'dw dim_calendar'
 
 	column date
 		dataType: dateTime
-		formatString: Long Date
+		formatString: Short Date
 		lineageTag: 45bd018e-8dd1-485c-93ff-6a538127eaa7
 		summarizeBy: none
 		sourceColumn: date
-
-		variation Variation
-			isDefault
-			relationship: 92c33161-5f27-4b44-9347-b32a8fdeea36
-			defaultHierarchy: LocalDateTable_9ed8fda1-310d-4ef4-8c8a-abbdce897a25.'Jerarquía de fechas'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -49,6 +44,9 @@ table 'dw dim_calendar'
 		lineageTag: 286b1810-6f5a-43d9-b8f2-bc0294da7b7e
 		summarizeBy: none
 		sourceColumn: month_name
+		sortByColumn: month
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 

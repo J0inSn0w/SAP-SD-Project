@@ -1,25 +1,23 @@
 model Model
 	culture: es-MX
 	defaultPowerBIDataSourceVersion: powerBI_V3
-	sourceQueryCulture: es-MX
+	sourceQueryCulture: en-US
 	valueFilterBehavior: independent
 	dataAccessOptions
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_QueryOrder = ["dw fact_sales","dw dim_org_sales","dw dim_material","dw dim_client","dw dim_calendar","SAP Measures"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table 'dw fact_sales'
-ref table DateTableTemplate_8c0900db-cf30-4424-a50d-bda7352d34b5
 ref table 'dw dim_org_sales'
 ref table 'dw dim_material'
 ref table 'dw dim_client'
 ref table 'dw dim_calendar'
-ref table LocalDateTable_9ed8fda1-310d-4ef4-8c8a-abbdce897a25
 ref table 'SAP Measures'
 
 ref cultureInfo es-MX
