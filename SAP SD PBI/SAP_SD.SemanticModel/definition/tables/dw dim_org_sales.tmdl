@@ -1,0 +1,30 @@
+table 'dw dim_org_sales'
+	lineageTag: e95ed346-62ff-422a-9720-8c61f552dc95
+
+	column vkorg
+		dataType: string
+		lineageTag: 23f3419d-a069-4f0e-81e3-73be02ece05b
+		summarizeBy: none
+		sourceColumn: vkorg
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_code
+		dataType: string
+		lineageTag: d68e55ae-8dfd-46f1-8659-16ab3331dd1b
+		summarizeBy: none
+		sourceColumn: company_code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dw dim_org_sales' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "postgres"),
+				    dw_dim_org_sales = Origen{[Schema="dw",Item="dim_org_sales"]}[Data]
+				in
+				    dw_dim_org_sales
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SAP_SD"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9e58df1f-8736-42ef-802a-d9afbbac60e5"
+  }
+}

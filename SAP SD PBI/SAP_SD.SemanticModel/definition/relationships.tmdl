@@ -1,0 +1,29 @@
+relationship 92c33161-5f27-4b44-9347-b32a8fdeea36
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'dw dim_calendar'.date
+	toColumn: LocalDateTable_9ed8fda1-310d-4ef4-8c8a-abbdce897a25.Date
+
+relationship 844c6f59-6b57-4e69-b47a-94d6152b3a11
+	fromColumn: 'dw fact_sales'.date
+	toColumn: 'dw dim_calendar'.date
+
+	annotation PBI_IsFromSource = FS
+
+relationship 0980c72c-9168-4fe6-be4d-997e9d2297bb
+	fromColumn: 'dw fact_sales'.client_key
+	toColumn: 'dw dim_client'.client_key
+
+	annotation PBI_IsFromSource = FS
+
+relationship 65a0d54e-7c5e-4dc1-a97c-331e493a67e1
+	fromColumn: 'dw fact_sales'.matnr
+	toColumn: 'dw dim_material'.matnr
+
+	annotation PBI_IsFromSource = FS
+
+relationship 623b8c85-2a03-4da1-9b25-69059d2c619c
+	fromColumn: 'dw fact_sales'.vkorg
+	toColumn: 'dw dim_org_sales'.vkorg
+
+	annotation PBI_IsFromSource = FS
+

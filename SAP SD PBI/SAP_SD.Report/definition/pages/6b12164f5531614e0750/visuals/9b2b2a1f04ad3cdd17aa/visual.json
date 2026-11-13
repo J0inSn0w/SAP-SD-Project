@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "9b2b2a1f04ad3cdd17aa",
+  "position": {
+    "x": 960.21817037567962,
+    "y": 779.774487352062,
+    "z": 5000,
+    "height": 300,
+    "width": 960.21817037567962,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_client"
+                    }
+                  },
+                  "Property": "vtweg"
+                }
+              },
+              "queryRef": "dw dim_client.vtweg",
+              "nativeQueryRef": "vtweg",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "Ventas Brutas MXN"
+                }
+              },
+              "queryRef": "SAP Measures.Ventas Brutas MXN",
+              "nativeQueryRef": "Ventas Brutas MXN"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SAP Measures"
+                  }
+                },
+                "Property": "Ventas Brutas MXN"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

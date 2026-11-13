@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "ef005ff6248638101011",
+  "position": {
+    "x": 0,
+    "y": 779.774487352062,
+    "z": 4000,
+    "height": 300,
+    "width": 960.21817037567962,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_org_sales"
+                    }
+                  },
+                  "Property": "vkorg"
+                }
+              },
+              "queryRef": "dw dim_org_sales.vkorg",
+              "nativeQueryRef": "vkorg",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "Ventas Brutas MXN"
+                }
+              },
+              "queryRef": "SAP Measures.Ventas Brutas MXN",
+              "nativeQueryRef": "Ventas Brutas MXN"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SAP Measures"
+                  }
+                },
+                "Property": "Ventas Brutas MXN"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

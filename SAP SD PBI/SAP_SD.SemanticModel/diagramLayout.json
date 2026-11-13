@@ -1,0 +1,104 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 123.36957930100823,
+            "y": 677.70464426851061
+          },
+          "nodeIndex": "dw dim_calendar",
+          "nodeLineageTag": "b8789b53-d33a-497f-9396-b047b4254e27",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 122.80104500182827,
+            "y": 537.61867153995365
+          },
+          "nodeIndex": "dw dim_client",
+          "nodeLineageTag": "94ee5bd0-30b5-4c73-83f0-0bd3a56baa29",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 296
+        },
+        {
+          "location": {
+            "x": 124.16422384215912,
+            "y": 375.90735879378337
+          },
+          "nodeIndex": "dw dim_material",
+          "nodeLineageTag": "cc766b29-7174-4a90-a278-803cd5f5092a",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 127.85495271391702,
+            "y": 237.33895540131766
+          },
+          "nodeIndex": "dw dim_org_sales",
+          "nodeLineageTag": "e95ed346-62ff-422a-9720-8c61f552dc95",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 598.778049167773,
+            "y": 228.36777713155237
+          },
+          "nodeIndex": "dw fact_sales",
+          "nodeLineageTag": "38b4f2de-57ff-4bdb-bb8d-a4234219311b",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 759.97700416594478,
+            "y": 300.79102594566325
+          },
+          "nodeIndex": "SAP Measures",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 63.287087723234038,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

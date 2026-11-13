@@ -1,0 +1,30 @@
+table 'dw dim_material'
+	lineageTag: cc766b29-7174-4a90-a278-803cd5f5092a
+
+	column matnr
+		dataType: string
+		lineageTag: 9e7f4a26-226c-45c5-a549-d67785feafe7
+		summarizeBy: none
+		sourceColumn: matnr
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: bae99e73-9412-49d2-aa98-e642a5f37b74
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dw dim_material' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "postgres"),
+				    dw_dim_material = Origen{[Schema="dw",Item="dim_material"]}[Data]
+				in
+				    dw_dim_material
+
+	annotation PBI_ResultType = Table
+

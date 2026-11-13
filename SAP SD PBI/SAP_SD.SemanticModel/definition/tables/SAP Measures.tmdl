@@ -1,0 +1,58 @@
+table 'SAP Measures'
+	lineageTag: 9c855777-15e1-42db-8643-975f3bb6c869
+
+	measure 'Ventas Netas MXN' =
+			
+			SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled]),
+			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign])
+		lineageTag: 75ca06dc-cb49-49ad-a876-1b8addd6912a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ventas Brutas MXN' =
+			
+			SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = 1),
+			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign])
+		lineageTag: 62d74619-b161-4ce6-8a34-53dca83ef538
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Devoluciones MXN' =
+			
+			ABS(SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = -1),
+			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign]))
+		lineageTag: 5fc6c270-1cdb-4783-941b-895ef23b2852
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Devolución' = DIVIDE([Devoluciones MXN],[Ventas Brutas MXN])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fa7db294-a032-40fb-8b11-55dd913a7d9b
+
+	measure '# Facturas' = DISTINCTCOUNT('dw fact_sales'[vbeln])
+		formatString: 0
+		lineageTag: aaa7b8fc-4c61-4356-9449-f3866793a700
+
+	measure '# Canceladas' = CALCULATE(DISTINCTCOUNT('dw fact_sales'[vbeln]),'dw fact_sales'[is_cancelled])
+		formatString: 0
+		lineageTag: b1e14120-1efb-456e-831f-050910c97db3
+
+	measure 'Ticket Promedio' = DIVIDE([Ventas Netas MXN], [# Facturas])
+		lineageTag: c4f78d9e-c7b8-43f3-9d02-c98e58e977d9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'SAP Measures' = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
+				in
+				    #"Columnas quitadas"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

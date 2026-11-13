@@ -1,0 +1,87 @@
+table 'dw dim_client'
+	lineageTag: 94ee5bd0-30b5-4c73-83f0-0bd3a56baa29
+
+	column client_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 8adc3d20-99e4-42aa-a5bf-a49292b67244
+		summarizeBy: none
+		sourceColumn: client_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column kunnr
+		dataType: string
+		lineageTag: f114e75b-3809-406d-aa80-f64d73dd903d
+		summarizeBy: none
+		sourceColumn: kunnr
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: afd95cb1-05f5-4932-86c5-9904d37ff26b
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column land
+		dataType: string
+		lineageTag: 83d297b0-7149-4e37-9573-e2812fc04a1e
+		summarizeBy: none
+		sourceColumn: land
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 01c96e50-396d-4b19-a14a-ed81f64d52c2
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column vkorg
+		dataType: string
+		lineageTag: 9f49d56b-73d9-4ede-adae-ea6532e8e94b
+		summarizeBy: none
+		sourceColumn: vkorg
+
+		annotation SummarizationSetBy = Automatic
+
+	column vtweg
+		dataType: string
+		lineageTag: 2eed4a80-2aa5-410e-95b8-17c1c1302898
+		summarizeBy: none
+		sourceColumn: vtweg
+
+		annotation SummarizationSetBy = Automatic
+
+	column spart
+		dataType: string
+		lineageTag: 179fef2d-808a-42fd-80ef-d77a3c2bcb1a
+		summarizeBy: none
+		sourceColumn: spart
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_group
+		dataType: string
+		lineageTag: ba4446f4-8f0d-4ff8-9e31-204d50efd24a
+		summarizeBy: none
+		sourceColumn: customer_group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dw dim_client' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "postgres"),
+				    dw_dim_client = Origen{[Schema="dw",Item="dim_client"]}[Data]
+				in
+				    dw_dim_client
+
+	annotation PBI_ResultType = Table
+

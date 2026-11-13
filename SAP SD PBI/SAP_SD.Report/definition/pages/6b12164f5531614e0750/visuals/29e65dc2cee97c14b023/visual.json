@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "29e65dc2cee97c14b023",
+  "position": {
+    "x": 1420.1972361589428,
+    "y": 17.185112668915966,
+    "z": 6002,
+    "height": 66.59231159204937,
+    "width": 225,
+    "tabOrder": 6002
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dw dim_org_sales"
+                    }
+                  },
+                  "Property": "vkorg"
+                }
+              },
+              "queryRef": "dw dim_org_sales.vkorg",
+              "nativeQueryRef": "vkorg",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fb1615c4e5462258b654",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_org_sales"
+              }
+            },
+            "Property": "vkorg"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

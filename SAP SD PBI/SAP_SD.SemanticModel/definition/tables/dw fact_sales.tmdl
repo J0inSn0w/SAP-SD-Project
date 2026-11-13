@@ -1,0 +1,150 @@
+table 'dw fact_sales'
+	lineageTag: 38b4f2de-57ff-4bdb-bb8d-a4234219311b
+
+	column vbeln
+		dataType: string
+		lineageTag: 53996f30-d7e1-4ca5-a781-599292c32ded
+		summarizeBy: none
+		sourceColumn: vbeln
+
+		annotation SummarizationSetBy = Automatic
+
+	column posnr
+		dataType: string
+		lineageTag: 890ba14c-8a1e-4629-ab0f-766a80157554
+		summarizeBy: none
+		sourceColumn: posnr
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: b1b9220e-0020-4b56-969b-72e90831e57b
+		summarizeBy: none
+		sourceColumn: date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column matnr
+		dataType: string
+		isHidden
+		lineageTag: 7ad5a977-8c5a-4f5c-8768-e315a89b6ad0
+		summarizeBy: none
+		sourceColumn: matnr
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vkorg
+		dataType: string
+		isHidden
+		lineageTag: a62410a1-61de-4ff5-85a2-5432857830f1
+		summarizeBy: none
+		sourceColumn: vkorg
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column client_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ae51cca1-e469-4f00-b2b1-e1d3907ecc86
+		summarizeBy: none
+		sourceColumn: client_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fkart
+		dataType: string
+		lineageTag: 14d99b93-6c69-43cb-8432-e01a14eccb82
+		summarizeBy: none
+		sourceColumn: fkart
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: double
+		lineageTag: ed56364d-dfce-46c5-aab0-e76ec8689c12
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vrkme
+		dataType: string
+		lineageTag: 2ee3f113-a67e-45e3-9391-34e5d4005494
+		summarizeBy: none
+		sourceColumn: vrkme
+
+		annotation SummarizationSetBy = Automatic
+
+	column net_amount
+		dataType: double
+		lineageTag: 6c3f9cec-6e6a-4eb6-87d8-2ad283b7504c
+		summarizeBy: sum
+		sourceColumn: net_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column waerk
+		dataType: string
+		lineageTag: a383460b-d083-44ae-a10b-a7af662da429
+		summarizeBy: none
+		sourceColumn: waerk
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_mxn
+		dataType: double
+		lineageTag: a3dde985-3e72-4b69-bae7-56ca86da5ac3
+		summarizeBy: sum
+		sourceColumn: amount_mxn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sign
+		dataType: int64
+		formatString: 0
+		lineageTag: a5ba8e09-e96a-49d0-a64f-f318d87ae872
+		summarizeBy: sum
+		sourceColumn: sign
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_cancelled
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ec6f34b3-c88b-4f89-a232-3aefd219922b
+		summarizeBy: none
+		sourceColumn: is_cancelled
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dw fact_sales' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost", "postgres"),
+				    dw_fact_sales = Origen{[Schema="dw",Item="fact_sales"]}[Data]
+				in
+				    dw_fact_sales
+
+	annotation PBI_ResultType = Table
+

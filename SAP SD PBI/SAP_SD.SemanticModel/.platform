@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SAP_SD"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ade290fa-acdf-43a2-8995-37262f3780f5"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "0ea4d291565b4092376b",
+  "position": {
+    "x": 0,
+    "y": 81.629285177350837,
+    "z": 0,
+    "height": 135.33276226771324,
+    "width": 1920.4363407513592,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "Ventas Netas MXN"
+                }
+              },
+              "queryRef": "SAP Measures.Ventas Netas MXN",
+              "nativeQueryRef": "Ventas Netas MXN"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "Devoluciones MXN"
+                }
+              },
+              "queryRef": "SAP Measures.Devoluciones MXN",
+              "nativeQueryRef": "Devoluciones MXN"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "% Devolución"
+                }
+              },
+              "queryRef": "SAP Measures.% Devolución",
+              "nativeQueryRef": "% Devolución"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SAP Measures"
+                    }
+                  },
+                  "Property": "# Facturas"
+                }
+              },
+              "queryRef": "SAP Measures.# Facturas",
+              "nativeQueryRef": "# Facturas"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SAP Measures"
+                  }
+                },
+                "Property": "Ventas Netas MXN"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "edb5d39f2096e9878908",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "Ventas Netas MXN"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7ee65f45a08a5dd2554b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "Devoluciones MXN"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "99eff7b9c00a906a5e21",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "% Devolución"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5aba1e819cc20862c3bb",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "# Facturas"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
