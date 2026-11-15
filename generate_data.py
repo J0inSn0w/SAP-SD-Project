@@ -1,23 +1,26 @@
-import random 
+import os
+import random
 import pandas as pd
 from sqlalchemy import create_engine,text
 from faker import Faker
 from datetime import date
+from dotenv import load_dotenv
 
 random.seed(42)
 Faker.seed(42)
 
 fake = Faker("es_MX")
 
-engine = create_engine("postgresql+psycopg2://USER:PASSWORD@localhost:5432/postgres")
+load_dotenv()
+engine = create_engine(os.environ["DATABASE_URL"])
 
-# CONS --KNVV--
+# CONSTANTS --KNVV--
 
-canales  = ["10", "20"]            # 10 mayoreo, 20 minoreo
-sectores = ["00"]                  # sector general
-grupos   = ["01", "02", "03"]      # grupos de clientes
+canales  = ["10", "20"]            # 10 wholesale, 20 retail
+sectores = ["00"]                  # general division
+grupos   = ["01", "02", "03"]      # customer groups
 
-# CONS --MAKT--
+# CONSTANTS --MAKT--
 
 materiales = [
     ("Tornillo hexagonal M8", "M8 Hex Bolt"),
@@ -52,11 +55,11 @@ materiales = [
     ("Aceite hidráulico", "Hydraulic Oil")
 ]
 
-# CONS --VBRK--
+# CONSTANTS --VBRK--
 
 n_facturas = 500
 
-# vbtyp -> fkart, para que siempre coincidan
+# vbtyp -> fkart, so they always match
 tipos_doc = {"M": "F2", "O": "G2"}
 
 moneda_por_org = {"MX01": "MXN", "US01": "USD"}
@@ -106,7 +109,7 @@ filas_knvv = []
 vkorgs = tvko["vkorg"].to_list()
 
 for kunnr in kna1["kunnr"]:
-    # ¿En cuántas organizaciones de ventas vende este cliente? (1 o 2)
+    # How many sales organizations does this customer buy from? (1 or 2)
     n_orgs = random.randint(1,len(vkorgs))
     orgs = random.sample(vkorgs,k=n_orgs)
 
@@ -117,7 +120,7 @@ for kunnr in kna1["kunnr"]:
             "vtweg":random.choice(canales),
             "spart":random.choice(sectores),
             "kdgrp":random.choice(grupos),
-            "kalks":1
+            "kalks":"1"
         })
 
 knvv = pd.DataFrame(filas_knvv)  
@@ -157,8 +160,8 @@ datos_mara = mara.to_dict(orient="records")
 
 filas_makt = []
 
-for matnr in mara["matnr"]:
-    esp,eng = random.choice(materiales)
+# sample (not choice): each material gets a unique description
+for matnr, (esp, eng) in zip(mara["matnr"], random.sample(materiales, k=n_materiales)):
 
     filas_makt.append({"matnr":matnr,"spras":"S","maktx":esp})
     filas_makt.append({"matnr":matnr,"spras":"E","maktx":eng})
@@ -191,14 +194,14 @@ for i in range(n_facturas):
         "vbeln": str(90000001 + i).zfill(10),
         "fkart": fkart,
         "vbtyp": vbtyp,
-        "fkdat": fake.date_between(start_date=date(2025, 1, 1), end_date="today"),
-        "kunag": area["kunnr"],                 # ojo: en knvv se llama distinto
+        "fkdat": fake.date_between(start_date=date(2025, 1, 1), end_date=date(2026, 10, 31)),   # fixed end date: same data on every run
+        "kunag": area["kunnr"],                 # note: called kunnr in knvv
         "vkorg": area["vkorg"],
         "vtweg": area["vtweg"],
         "spart": area["spart"],
         "waerk": moneda_por_org[area["vkorg"]],
         "knumv": None,
-        "fksto": random.choices(["X",""],weights=[3,97])[0],                       
+        "fksto": "X" if fkart == "F2" and random.random() < 0.03 else "",   # only invoices get cancelled
     })
 
 vbrk = pd.DataFrame(filas_vbrk)
@@ -224,11 +227,13 @@ precio_por_material = {matnr: round(random.uniform(10, 2000), 2)
 
 for factura in vbrk.to_dict(orient="records"):
     n_renglones = random.randint(1, 5)
-    mats = random.sample(materiales_lista, k=n_renglones)          # sin repetir material en la factura
+    mats = random.sample(materiales_lista, k=n_renglones)          # no repeated material within an invoice
 
     for j, matnr in enumerate(mats, start=1):
         fkimg = random.randint(1,100)
         precio = precio_por_material[matnr]
+        if factura["waerk"] == "USD":                              # base prices are in MXN
+            precio = round(precio / 18, 2)
 
         filas_vbrp.append({
             "vbeln":factura["vbeln"],
@@ -251,84 +256,6 @@ sql_vbrp = text("""
 
 datos_vbrp = vbrp.to_dict(orient="records")
 
-# --dim_calendar--
-
-calendar_query = text(""" 
-    INSERT INTO dw.dim_calendar(date,year,quarter,month,month_name,day,day_of_week,day_name,week_of_year,is_weekend,is_holiday)
-        SELECT 
-            calendar::date as date,
-            EXTRACT(YEAR FROM calendar) AS year,
-            EXTRACT(QUARTER FROM calendar) AS quarter,
-            EXTRACT(MONTH FROM calendar) AS month,
-            TRIM(TO_CHAR(calendar,'TMMonth')) as month_name,
-            EXTRACT(DAY FROM calendar) AS day,
-            EXTRACT(ISODOW FROM calendar) AS day_of_week,
-            TRIM(TO_CHAR(calendar,'TMDay')) as day_name,
-            EXTRACT(WEEK FROM calendar) AS week_of_year,
-            CASE
-                WHEN EXTRACT(ISODOW FROM calendar) IN (6,7) THEN TRUE ELSE FALSE
-            END AS is_weekend,
-            CASE
-                WHEN calendar::date IN ('2025-01-01', '2025-02-03', '2025-03-17', '2025-05-01', '2025-09-16', '2025-11-17', '2025-12-25', '2026-01-01', '2026-02-02', '2026-03-16', '2026-05-01', '2026-09-16', '2026-11-16', '2026-12-25') THEN TRUE ELSE FALSE
-            END AS is_holiday
-    FROM generate_series('2025-01-01', '2026-12-31', INTERVAL '1 day') AS calendar
-    ON CONFLICT(date) DO NOTHING """)
-
-# --dim_material--
-
-filas_dim_material = []
-
-lista_makt = makt[makt["spras"] == "S"]
-
-for material in lista_makt.to_dict(orient="records"):
-    
-    filas_dim_material.append({
-        "matnr":material["matnr"],
-        "description":material["maktx"]
-    })
-
-dim_material = pd.DataFrame(filas_dim_material)
-
-sql_dim_material = text("""
-    INSERT INTO dw.dim_material
-        (matnr,description)
-    VALUES
-        (:matnr,:description)
-    ON CONFLICT (matnr) DO NOTHING;
-""")
-
-datos_dim_material = dim_material.to_dict(orient="records")
-
-# --dim_org_sales--
-
-filas_dim_org_sales = []
-
-for sales1 in tvko.to_dict(orient="records"):
-    
-    filas_dim_org_sales.append({
-        "vkorg":sales1["vkorg"],
-        "company_code":sales1["bukrs"]
-    })
-
-dim_org_sales = pd.DataFrame(filas_dim_org_sales)
-
-sql_dim_org_sales = text("""
-    INSERT INTO dw.dim_org_sales
-        (vkorg,company_code)
-    VALUES
-        (:vkorg,:company_code)
-    ON CONFLICT (vkorg) DO NOTHING;
-""")
-
-datos_dim_org_sales = dim_org_sales.to_dict(orient="records")
-
-# --dim_client--
-
-filas_dim_client = []
-
-
-
-
 with engine.begin() as conn:
     conn.execute(sql_tvko,datos_tvko)
     conn.execute(sql_kna1,datos_kna1)
@@ -337,11 +264,6 @@ with engine.begin() as conn:
     conn.execute(sql_makt,datos_makt)
     conn.execute(sql_vbrk,datos_vbrk)
     conn.execute(sql_vbrp,datos_vbrp)
-    conn.execute(calendar_query)
-    conn.execute(sql_dim_material,datos_dim_material)
-    conn.execute(sql_dim_org_sales,datos_dim_org_sales)
 
-
-
-print("Carga finalizada sin duplicar las claves existentes.")
+print("sap_raw loaded. Next step: transform_dw.sql")
 

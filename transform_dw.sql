@@ -1,18 +1,26 @@
-BEGIN; 
 -- ============================================
 -- transform_dw.sql
--- Llena el schema dw a partir de sap_raw
--- Orden: dimensiones primero, fact al final
+-- Populates the dw schema from sap_raw
+-- Strategy: full refresh (truncate and reload everything)
+-- Order: dimensions first, fact last
 -- ============================================
+BEGIN;
+
+-- Full refresh: the fact is included so no FKs are left orphaned;
+-- RESTART IDENTITY resets client_key to 1
+TRUNCATE dw.fact_sales, dw.dim_client, dw.dim_material,
+         dw.dim_org_sales, dw.dim_calendar
+RESTART IDENTITY;
 
 -- --dim_calendar--
-INSERT INTO dw.dim_calendar(date,year,quarter,month,month_name,day,day_of_week,day_name,week_of_year,is_weekend,is_holiday)
-SELECT 
+INSERT INTO dw.dim_calendar(date,year,quarter,month,month_name,year_month,day,day_of_week,day_name,week_of_year,is_weekend,is_holiday)
+SELECT
 	calendar::date as date,
 	EXTRACT(YEAR FROM calendar) AS year,
 	EXTRACT(QUARTER FROM calendar) AS quarter,
 	EXTRACT(MONTH FROM calendar) AS month,
 	TRIM(TO_CHAR(calendar,'TMMonth')) as month_name,
+	TO_CHAR(calendar,'YYYY-MM') AS year_month,
 	EXTRACT(DAY FROM calendar) AS day,
 	EXTRACT(ISODOW FROM calendar) AS day_of_week,
 	TRIM(TO_CHAR(calendar,'TMDay')) as day_name,
@@ -31,18 +39,23 @@ INSERT INTO dw.dim_material(matnr,description)
 SELECT matnr, 
 	   maktx AS description
 FROM sap_raw.makt
-WHERE spras = 'S'
+WHERE spras = 'E'   -- English descriptions to match the report language
 ON CONFLICT(matnr) DO NOTHING;
 
 -- --dim_org_sales--
-INSERT INTO dw.dim_org_sales(vkorg,company_code)
+INSERT INTO dw.dim_org_sales(vkorg,company_code,sales_org_name)
 SELECT vkorg, 
-	   bukrs AS company_code
+	   bukrs AS company_code,
+	   	CASE vkorg
+		WHEN 'MX01' THEN 'Mexico'
+		WHEN 'US01' THEN 'United States'
+		ELSE 'Unknown'
+	END AS sales_org_name
 FROM sap_raw.tvko
 ON CONFLICT(vkorg) DO NOTHING;
 
 -- --dim_client--
-INSERT INTO dw.dim_client(kunnr,name,land,city,vkorg,vtweg,spart,customer_group)
+INSERT INTO dw.dim_client(kunnr,name,land,city,vkorg,vtweg,spart,customer_group,channel_name,customer_group_name)
 SELECT a.kunnr,             
 	   b.name1 AS name,
 	   b.land1 AS land,
@@ -50,7 +63,18 @@ SELECT a.kunnr,
 	   a.vkorg,              
 	   a.vtweg,              
 	   a.spart,              
-	   a.kdgrp AS customer_group
+	   a.kdgrp AS customer_group,
+	   CASE a.vtweg
+		WHEN '10' THEN 'Wholesale'
+		WHEN '20' THEN 'Retail'
+		ELSE 'Unknown'
+	END AS channel_name,
+		CASE a.kdgrp 
+		WHEN '01' THEN 'Distributor'
+		WHEN '02' THEN 'Industrial'
+		WHEN '03' THEN 'Government'
+		ELSE 'Unknown'
+	END AS customer_group_name
 FROM sap_raw.knvv AS a 
 LEFT JOIN sap_raw.kna1 AS b ON a.kunnr = b.kunnr
 ON CONFLICT(kunnr, vkorg, vtweg, spart) DO NOTHING;

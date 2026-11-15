@@ -10,6 +10,8 @@ CREATE TABLE dw.dim_client (
     vtweg          char(2) NOT NULL,
     spart          char(2) NOT NULL,
     customer_group char(2),
+    channel_name   varchar(20),
+    customer_group_name varchar (30),
     PRIMARY KEY (client_key),
     UNIQUE (kunnr, vkorg, vtweg, spart)
 );
@@ -20,6 +22,7 @@ CREATE TABLE dw.dim_calendar (
     quarter      smallint,
     month        smallint,
     month_name   varchar(15),
+    year_month   char(7),                -- '2025-01': monthly axis without mixing years
     day          smallint,
     day_of_week  smallint,
     day_name     varchar(15),
@@ -38,6 +41,7 @@ CREATE TABLE dw.dim_material (
 CREATE TABLE dw.dim_org_sales (
     vkorg        char(4) NOT NULL,
     company_code char(4),
+    sales_org_name  varchar(30),
     PRIMARY KEY (vkorg)
 );
 

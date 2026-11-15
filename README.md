@@ -1,134 +1,139 @@
-# SAP SD — Modelo estrella de ventas
+# SAP SD — Sales Star Schema
 
-Proyecto práctico de modelado dimensional sobre datos de **SAP SD (Sales & Distribution)**.
-Simula las tablas de facturación de SAP en PostgreSQL con datos sintéticos y las transforma en un **modelo estrella (Kimball)** listo para Power BI.
+Hands-on dimensional modeling project built on **SAP SD (Sales & Distribution)** data.
+It simulates SAP billing tables in PostgreSQL with synthetic data and transforms them into a **Kimball star schema** ready for Power BI.
 
-> Los datos son 100% ficticios, generados con Python y Faker. No contiene información de ninguna empresa real.
+> All data is 100% fictitious, generated with Python and Faker. It contains no information from any real company.
 
-## Arquitectura
+## Architecture
 
 ```
 generate_data.py  ──►  sap_raw  ──►  transform_dw.sql  ──►  dw  ──►  Power BI
- (simula SAP)        (copia fiel     (reglas de negocio)    (modelo
-                      de la fuente)                          estrella)
+ (simulates SAP)     (faithful copy   (business rules)     (star
+                      of the source)                        schema)
 ```
 
-| Capa | Schema | Contenido |
+| Layer | Schema | Contents |
 |---|---|---|
-| Fuente | `sap_raw` | Tablas SAP con sus nombres y tipos originales, sin transformar. |
-| Analítica | `dw` | Modelo estrella con nombres de negocio y columnas calculadas. |
+| Source | `sap_raw` | SAP tables with their original names and types, untransformed. |
+| Analytics | `dw` | Star schema with business-friendly names and derived columns. |
 
-**Principio:** `sap_raw` refleja la fuente tal cual. Toda regla de negocio (signo, moneda, cancelaciones) vive en la transformación, así `dw` se puede borrar y reconstruir sin tocar los datos de origen.
+**Principle:** `sap_raw` mirrors the source as-is. Every business rule (sign, currency, cancellations) lives in the transformation, so `dw` can be dropped and rebuilt without touching the source data.
 
-## Capa `sap_raw`: tablas SAP simuladas
+## `sap_raw` layer: simulated SAP tables
 
-![ERD SAP SD](erd_sap_sales_distribution.png)
+![SAP SD ERD](erd_sap_sales_distribution.png)
 
-| Tabla | Descripción | Llave primaria |
+| Table | Description | Primary key |
 |---|---|---|
-| `tvko` | Organizaciones de ventas → sociedad | `vkorg` |
-| `kna1` | Maestro de clientes (datos generales) | `kunnr` |
-| `knvv` | Cliente por área de ventas | `kunnr, vkorg, vtweg, spart` |
-| `mara` | Maestro de materiales | `matnr` |
-| `makt` | Descripciones de material por idioma | `matnr, spras` |
-| `vbrk` | Encabezado de factura | `vbeln` |
-| `vbrp` | Posiciones de factura | `vbeln, posnr` |
+| `tvko` | Sales organizations → company code | `vkorg` |
+| `kna1` | Customer master (general data) | `kunnr` |
+| `knvv` | Customer per sales area | `kunnr, vkorg, vtweg, spart` |
+| `mara` | Material master | `matnr` |
+| `makt` | Material descriptions by language | `matnr, spras` |
+| `vbrk` | Billing document header | `vbeln` |
+| `vbrp` | Billing document items | `vbeln, posnr` |
 
-### Campos SAP clave
+### Key SAP fields
 
-| Campo | Significado |
+| Field | Meaning |
 |---|---|
-| `vbtyp` | Categoría del documento: `M` = factura, `O` = nota de crédito |
-| `fkart` | Clase de factura: `F2` = factura, `G2` = nota de crédito |
-| `fksto` | `X` = factura cancelada |
-| `netwr` | Valor neto, **siempre positivo**; el signo se deduce de `vbtyp` |
-| `waerk` | Moneda del documento (`MXN`, `USD`) |
-| `fkimg` / `vrkme` | Cantidad facturada / unidad de venta |
-| `kunag` | Cliente solicitante (en `knvv`/`kna1` se llama `kunnr`) |
-| `vkorg` / `vtweg` / `spart` | Área de ventas: organización / canal / sector |
-| `kdgrp` | Grupo de clientes |
-| `spras` | Idioma (`S` = español, `E` = inglés) |
+| `vbtyp` | Document category: `M` = invoice, `O` = credit memo |
+| `fkart` | Billing type: `F2` = invoice, `G2` = credit memo |
+| `fksto` | `X` = cancelled invoice |
+| `netwr` | Net value, **always positive**; the sign comes from `vbtyp` |
+| `waerk` | Document currency (`MXN`, `USD`) |
+| `fkimg` / `vrkme` | Billed quantity / sales unit |
+| `kunag` | Sold-to party (called `kunnr` in `knvv`/`kna1`) |
+| `vkorg` / `vtweg` / `spart` | Sales area: sales organization / distribution channel / division |
+| `kdgrp` | Customer group |
+| `spras` | Language (`S` = Spanish, `E` = English) |
 
-## Capa `dw`: modelo estrella
+## `dw` layer: star schema
 
 ![Star schema](star_schema_sap.png)
 
-**Grano de `fact_sales`:** una fila por **línea de factura** (`vbrp`).
+**Grain of `fact_sales`:** one row per **billing item** (`vbrp`).
 
-| Tabla | Origen | Llave |
+| Table | Source | Key |
 |---|---|---|
-| `fact_sales` | `vbrp` + `vbrk` | `vbeln, posnr` (dimensión degenerada) |
-| `dim_client` | `knvv` + `kna1` | `client_key` (sustituta) · `UNIQUE (kunnr, vkorg, vtweg, spart)` |
-| `dim_material` | `makt` (solo `spras = 'S'`) | `matnr` |
+| `fact_sales` | `vbrp` + `vbrk` | `vbeln, posnr` (degenerate dimension) |
+| `dim_client` | `knvv` + `kna1` | `client_key` (surrogate) · `UNIQUE (kunnr, vkorg, vtweg, spart)` |
+| `dim_material` | `makt` (only `spras = 'E'`, English descriptions) | `matnr` |
 | `dim_org_sales` | `tvko` | `vkorg` |
-| `dim_calendar` | `generate_series` 2025-2026 | `date` |
+| `dim_calendar` | `generate_series` 2025-2026 (includes `year_month` for monthly axes) | `date` |
 
-### Decisiones de diseño
+### Design decisions
 
-- **Llave sustituta en `dim_client`.** Un cliente aparece una vez por área de ventas, así que su llave natural tiene 4 columnas. `client_key` permite unir el fact con una sola columna (Power BI no admite relaciones de varias columnas). La llave natural se conserva como `UNIQUE` para evitar duplicados y para buscar el `client_key` al cargar el fact.
-- **Montos sin signo + columna `sign`.** `net_amount` y `amount_mxn` se guardan positivos como en SAP; `sign` (1 / -1) indica si resta. La medida aplica el signo una sola vez:
+- **Surrogate key in `dim_client`.** A customer appears once per sales area, so its natural key has 4 columns. `client_key` lets the fact join on a single column (Power BI does not support multi-column relationships). The natural key is kept as a `UNIQUE` constraint to prevent duplicates and to look up `client_key` when loading the fact.
+- **Unsigned amounts + `sign` column.** `net_amount` and `amount_mxn` are stored as positive values, as in SAP; `sign` (1 / -1) says whether the row subtracts. The measure applies the sign once:
   ```dax
-  Ventas Netas MXN =
+  Net Sales MXN =
   SUMX (
       FILTER ( fact_sales, NOT fact_sales[is_cancelled] ),
       fact_sales[amount_mxn] * fact_sales[sign]
   )
   ```
-- **Moneda y unidad son atributos, no medidas.** `waerk` y `vrkme` acompañan a los montos y cantidades para interpretarlos; no se suman.
-- **Conversión a MXN** con tipo de cambio fijo de 18 (simplificación del ejercicio).
-- **Calendario** con festivos oficiales de México 2025-2026 (`is_holiday`).
-- **Cargas idempotentes:** todos los `INSERT` usan `ON CONFLICT DO NOTHING`, así el proceso puede correr varias veces sin duplicar filas.
+- **Currency and unit are attributes, not measures.** `waerk` and `vrkme` give context to amounts and quantities; they are never summed.
+- **Business labels for codes.** `channel_name`, `customer_group_name` and `sales_org_name` translate SAP codes (`10`, `01`, `MX01`) into readable text in the transformation, with `'Unknown'` as a fallback for new codes.
+- **Conversion to MXN** uses a fixed exchange rate of 18 (a simplification for this exercise).
+- **Calendar** includes Mexico's official holidays for 2025-2026 (`is_holiday`).
+- **Full refresh loads.** `transform_dw.sql` truncates every `dw` table and reloads it inside a single transaction, so it can run any number of times without duplicates, and a failure rolls back to the previous data.
 
-## Archivos
+## Files
 
-| Archivo | Qué hace |
+| File | Purpose |
 |---|---|
-| `creation_schema_sap_tables.sql` | Crea el schema `sap_raw` y sus 7 tablas con llaves y FKs. |
-| `generate_data.py` | Genera datos sintéticos (10 clientes, 30 materiales, 500 facturas) y los carga a `sap_raw`. |
-| `creation_schema_star_tables.sql` | Crea el schema `dw` con las dimensiones y el fact. |
-| `transform_dw.sql` | Llena `dw` desde `sap_raw` (dimensiones primero, fact al final) en una transacción. |
-| `erd_sap_sales_distribution.png` | Diagrama de las tablas SAP. |
-| `star_schema_sap.png` | Diagrama del modelo estrella. |
+| `creation_schema_sap_tables.sql` | Creates the `sap_raw` schema and its 7 tables with keys and FKs. |
+| `generate_data.py` | Generates synthetic data (10 customers, 30 materials, 500 billing documents) and loads it into `sap_raw`. |
+| `creation_schema_star_tables.sql` | Creates the `dw` schema with the dimensions and the fact table. |
+| `transform_dw.sql` | Populates `dw` from `sap_raw` (dimensions first, fact last) in a single transaction. |
+| `SAP SD PBI/` | Power BI project (`.pbip`) with the report. |
+| `.env.example` | Template for the database connection string. |
+| `erd_sap_sales_distribution.png` | Diagram of the SAP tables. |
+| `star_schema_sap.png` | Diagram of the star schema. |
 
-## Cómo ejecutarlo
+## How to run it
 
-**Requisitos:** PostgreSQL y Python 3 con `pandas`, `sqlalchemy`, `psycopg2` y `faker`.
+**Requirements:** PostgreSQL and Python 3 with `pandas`, `sqlalchemy`, `psycopg2`, `faker` and `python-dotenv`.
 
 ```powershell
-pip install pandas sqlalchemy psycopg2-binary faker
+pip install pandas sqlalchemy psycopg2-binary faker python-dotenv
 ```
 
-1. Crear las tablas fuente: correr `creation_schema_sap_tables.sql`.
-2. Ajustar la cadena de conexión en `generate_data.py` y ejecutarlo:
+1. Copy `.env.example` to `.env` and set the real connection string (`.env` is in `.gitignore`).
+2. Create the source tables: run `creation_schema_sap_tables.sql`.
+3. Generate the data in `sap_raw`:
    ```powershell
    python generate_data.py
    ```
-3. Crear el modelo estrella: correr `creation_schema_star_tables.sql`.
-4. Transformar: correr `transform_dw.sql`.
-5. Verificar:
+4. Create the star schema: run `creation_schema_star_tables.sql`.
+5. Transform: run `transform_dw.sql`. It performs a **full refresh**, so it is safe to run repeatedly.
+6. Open `SAP SD PBI/SAP_SD.pbip` in Power BI Desktop and refresh.
+7. Verify:
    ```sql
-   SELECT 'calendar' AS tabla, COUNT(*) FROM dw.dim_calendar
+   SELECT 'calendar' AS table_name, COUNT(*) FROM dw.dim_calendar
    UNION ALL SELECT 'material',  COUNT(*) FROM dw.dim_material
    UNION ALL SELECT 'org_sales', COUNT(*) FROM dw.dim_org_sales
    UNION ALL SELECT 'client',    COUNT(*) FROM dw.dim_client
    UNION ALL SELECT 'fact',      COUNT(*) FROM dw.fact_sales;
    ```
 
-Para regenerar los datos desde cero:
+To regenerate the source data from scratch, empty `sap_raw` first (the generator uses `ON CONFLICT DO NOTHING`, so it will not overwrite existing rows), then repeat steps 3 and 5:
 
 ```sql
 TRUNCATE sap_raw.vbrp, sap_raw.vbrk, sap_raw.knvv, sap_raw.makt,
          sap_raw.mara, sap_raw.kna1, sap_raw.tvko;
 ```
 
-## Estado
+## Status
 
-- [x] Tablas SAP en `sap_raw` y generador de datos
-- [x] Diseño del modelo estrella
-- [x] Dimensiones en `transform_dw.sql`
-- [ ] Carga de `fact_sales`
-- [ ] Mover las dimensiones fuera de `generate_data.py` (ya están en `transform_dw.sql`)
-- [ ] Ajustes de realismo en el generador: cancelar solo facturas `F2`, precios en USD, `kalks` como texto
-- [ ] Mover credenciales a un archivo `.env`
-- [ ] Reporte en Power BI
-- [ ] Migrar la transformación a dbt
+- [x] SAP tables in `sap_raw` and data generator
+- [x] Star schema design
+- [x] Dimensions and `fact_sales` in `transform_dw.sql` (full refresh)
+- [x] Business labels for channel, customer group and sales organization
+- [x] Generator realism fixes: only `F2` invoices get cancelled, USD prices, fixed end date
+- [x] Credentials in `.env`
+- [x] Power BI report (2 pages)
+- [ ] Credit memos linked to a previous invoice (today they are independent, so a month can show a return rate above 100%)
+- [ ] Migrate the transformation to dbt
