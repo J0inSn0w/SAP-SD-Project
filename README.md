@@ -126,14 +126,3 @@ TRUNCATE sap_raw.vbrp, sap_raw.vbrk, sap_raw.knvv, sap_raw.makt,
          sap_raw.mara, sap_raw.kna1, sap_raw.tvko;
 ```
 
-## Status
-
-- [x] SAP tables in `sap_raw` and data generator
-- [x] Star schema design
-- [x] Dimensions and `fact_sales` in `transform_dw.sql` (full refresh)
-- [x] Business labels for channel, customer group and sales organization
-- [x] Generator realism fixes: only `F2` invoices get cancelled, USD prices, fixed end date
-- [x] Credentials in `.env`
-- [x] Power BI report (2 pages)
-- [ ] Credit memos linked to a previous invoice (today they are independent, so a month can show a return rate above 100%)
-- [ ] Migrate the transformation to dbt
