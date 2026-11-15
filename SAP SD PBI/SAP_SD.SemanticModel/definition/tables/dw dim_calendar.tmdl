@@ -103,6 +103,16 @@ table 'dw dim_calendar'
 
 		annotation SummarizationSetBy = Automatic
 
+	column year_month
+		dataType: string
+		lineageTag: d5e1853e-0c99-47c9-b9bf-50a7987a22a9
+		summarizeBy: none
+		sourceColumn: year_month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'dw dim_calendar' = m
 		mode: import
 		source =

@@ -42,11 +42,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "Gross Sales MXN"
+                  "Property": "Net Sales MXN"
                 }
               },
-              "queryRef": "SAP Measures.Ventas Brutas MXN",
-              "nativeQueryRef": "Gross Sales MXN"
+              "queryRef": "SAP Measures.Net Sales MXN",
+              "nativeQueryRef": "Net Sales MXN"
             }
           ]
         }
@@ -61,7 +61,7 @@
                     "Entity": "SAP Measures"
                   }
                 },
-                "Property": "Gross Sales MXN"
+                "Property": "Net Sales MXN"
               }
             },
             "direction": "Descending"
@@ -69,6 +69,34 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top 10 Customers by Net Sales'"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   },
@@ -173,7 +201,36 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "6e51e2214845471be83d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_client"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "7947b441781105a350e0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "Net Sales MXN"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

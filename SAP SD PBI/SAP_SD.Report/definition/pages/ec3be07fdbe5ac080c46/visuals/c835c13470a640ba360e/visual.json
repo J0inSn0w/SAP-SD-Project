@@ -23,11 +23,11 @@
                       "Entity": "dw dim_client"
                     }
                   },
-                  "Property": "customer_group"
+                  "Property": "customer_group_name"
                 }
               },
-              "queryRef": "dw dim_client.customer_group",
-              "nativeQueryRef": "customer_group",
+              "queryRef": "dw dim_client.customer_group_name",
+              "nativeQueryRef": "customer_group_name",
               "active": true
             }
           ]
@@ -80,7 +80,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "36e6c1b9d470679b32ad",
+        "name": "d9bf36bcd508b695b0d0",
         "field": {
           "Column": {
             "Expression": {
@@ -88,7 +88,7 @@
                 "Entity": "dw dim_client"
               }
             },
-            "Property": "customer_group"
+            "Property": "customer_group_name"
           }
         },
         "type": "Categorical"

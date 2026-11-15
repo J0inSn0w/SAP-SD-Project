@@ -17,6 +17,14 @@ table 'dw dim_org_sales'
 
 		annotation SummarizationSetBy = Automatic
 
+	column sales_org_name
+		dataType: string
+		lineageTag: 09ab6df9-c9b2-4a2b-97b3-b305689eedd1
+		summarizeBy: none
+		sourceColumn: sales_org_name
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'dw dim_org_sales' = m
 		mode: import
 		source =

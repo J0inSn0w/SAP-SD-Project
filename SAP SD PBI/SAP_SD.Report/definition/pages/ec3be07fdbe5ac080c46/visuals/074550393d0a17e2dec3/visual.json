@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "dw fact_sales.vbeln",
-              "nativeQueryRef": "vbeln"
+              "nativeQueryRef": "invoice",
+              "displayName": "invoice"
             },
             {
               "field": {
@@ -41,7 +42,8 @@
                 }
               },
               "queryRef": "dw fact_sales.posnr",
-              "nativeQueryRef": "posnr"
+              "nativeQueryRef": "item",
+              "displayName": "item"
             },
             {
               "field": {
@@ -99,7 +101,8 @@
                 }
               },
               "queryRef": "dw fact_sales.fkart",
-              "nativeQueryRef": "fkart"
+              "nativeQueryRef": "billing_type",
+              "displayName": "billing_type"
             },
             {
               "field": {
@@ -192,6 +195,23 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dw fact_sales"
+                  }
+                },
+                "Property": "waerk"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
@@ -586,6 +606,19 @@
           },
           "selector": {
             "metadata": "dw fact_sales.vbeln"
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

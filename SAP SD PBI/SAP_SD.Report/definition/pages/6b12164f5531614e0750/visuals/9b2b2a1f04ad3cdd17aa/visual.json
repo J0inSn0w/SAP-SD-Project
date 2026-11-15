@@ -23,11 +23,11 @@
                       "Entity": "dw dim_client"
                     }
                   },
-                  "Property": "vtweg"
+                  "Property": "channel_name"
                 }
               },
-              "queryRef": "dw dim_client.vtweg",
-              "nativeQueryRef": "vtweg",
+              "queryRef": "dw dim_client.channel_name",
+              "nativeQueryRef": "channel_name",
               "active": true
             }
           ]
@@ -42,11 +42,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "Gross Sales MXN"
+                  "Property": "Net Sales MXN"
                 }
               },
-              "queryRef": "SAP Measures.Ventas Brutas MXN",
-              "nativeQueryRef": "Gross Sales MXN"
+              "queryRef": "SAP Measures.Net Sales MXN",
+              "nativeQueryRef": "Net Sales MXN"
             }
           ]
         }
@@ -61,7 +61,7 @@
                     "Entity": "SAP Measures"
                   }
                 },
-                "Property": "Gross Sales MXN"
+                "Property": "Net Sales MXN"
               }
             },
             "direction": "Descending"
@@ -70,6 +70,81 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "valueAxis": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000000D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Net Sales by Distribution Channel'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0c2d47acc60058096a7b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "Net Sales MXN"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4749f8c1985e0e00ada5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_client"
+              }
+            },
+            "Property": "channel_name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

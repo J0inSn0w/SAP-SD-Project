@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "21c81c640ba612023922",
   "position": {
-    "x": 10.291629675538953,
-    "y": 12.349955610646745,
+    "x": 30.874889026616859,
+    "y": 14.408281545754535,
     "z": 6000,
     "height": 65.8664299234493,
     "width": 687.48086232600212,
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Sales SAP SD - Sales Summary",
+                    "value": "SAP SD - Sales Summary",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "32pt"

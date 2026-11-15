@@ -42,11 +42,11 @@
                       "Entity": "SAP Measures"
                     }
                   },
-                  "Property": "Gross Sales MXN"
+                  "Property": "Net Sales MXN"
                 }
               },
-              "queryRef": "SAP Measures.Ventas Brutas MXN",
-              "nativeQueryRef": "Gross Sales MXN"
+              "queryRef": "SAP Measures.Net Sales MXN",
+              "nativeQueryRef": "Net Sales MXN"
             }
           ]
         }
@@ -61,7 +61,7 @@
                     "Entity": "SAP Measures"
                   }
                 },
-                "Property": "Gross Sales MXN"
+                "Property": "Net Sales MXN"
               }
             },
             "direction": "Descending"
@@ -69,6 +69,34 @@
         ],
         "isDefaultSort": true
       }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top 10 Materials by Net Sales'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   },
@@ -174,6 +202,20 @@
             }
           ]
         }
+      },
+      {
+        "name": "8ddb8c58803d304c5700",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "Net Sales MXN"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

@@ -23,11 +23,11 @@
                       "Entity": "dw dim_client"
                     }
                   },
-                  "Property": "customer_group"
+                  "Property": "customer_group_name"
                 }
               },
-              "queryRef": "dw dim_client.customer_group",
-              "nativeQueryRef": "customer_group",
+              "queryRef": "dw dim_client.customer_group_name",
+              "nativeQueryRef": "customer_group_name",
               "active": true
             }
           ]
@@ -47,8 +47,52 @@
             }
           }
         }
+      ],
+      "header": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c312430f02760ee6c950",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_client"
+              }
+            },
+            "Property": "customer_group_name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

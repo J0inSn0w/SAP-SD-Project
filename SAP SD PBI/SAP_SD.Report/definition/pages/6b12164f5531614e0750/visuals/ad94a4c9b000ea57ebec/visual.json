@@ -29,71 +29,27 @@
               "queryRef": "dw dim_calendar.year",
               "nativeQueryRef": "year",
               "active": true
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "quarter"
-                }
-              },
-              "queryRef": "dw dim_calendar.quarter",
-              "nativeQueryRef": "quarter",
-              "active": false
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "month_name"
-                }
-              },
-              "queryRef": "dw dim_calendar.month_name",
-              "nativeQueryRef": "month",
-              "active": false,
-              "displayName": "month"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "week_of_year"
-                }
-              },
-              "queryRef": "dw dim_calendar.week_of_year",
-              "nativeQueryRef": "week",
-              "active": false,
-              "displayName": "week"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "date"
-                }
-              },
-              "queryRef": "dw dim_calendar.date",
-              "nativeQueryRef": "date",
-              "active": false
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dw dim_calendar"
+                  }
+                },
+                "Property": "year"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "expansionStates": [
@@ -120,58 +76,6 @@
               }
             ],
             "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "dw dim_calendar.quarter"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "quarter"
-                }
-              }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "dw dim_calendar.month_name"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "month_name"
-                }
-              }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "dw dim_calendar.week_of_year"
-            ],
-            "isCollapsed": true,
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "dw dim_calendar.date"
-            ],
-            "isCollapsed": true,
-            "isPinned": true
           }
         ],
         "root": {}
@@ -195,40 +99,38 @@
         {
           "properties": {}
         }
+      ],
+      "header": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "items": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "7584096029664004c49c",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dw dim_calendar"
-              }
-            },
-            "Property": "date"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "a3cab2c831c4a0e14400",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dw dim_calendar"
-              }
-            },
-            "Property": "month_name"
-          }
-        },
-        "type": "Categorical"
-      },
       {
         "name": "399239e6128b0631ea2b",
         "field": {
@@ -239,34 +141,6 @@
               }
             },
             "Property": "year"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "bed219a4100c00b5c8ea",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dw dim_calendar"
-              }
-            },
-            "Property": "quarter"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "cd0c3469d3ec2a2e3222",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dw dim_calendar"
-              }
-            },
-            "Property": "week_of_year"
           }
         },
         "type": "Advanced"

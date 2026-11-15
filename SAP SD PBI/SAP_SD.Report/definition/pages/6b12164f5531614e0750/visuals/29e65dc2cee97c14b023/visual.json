@@ -23,11 +23,11 @@
                       "Entity": "dw dim_org_sales"
                     }
                   },
-                  "Property": "vkorg"
+                  "Property": "sales_org_name"
                 }
               },
-              "queryRef": "dw dim_org_sales.vkorg",
-              "nativeQueryRef": "vkorg",
+              "queryRef": "dw dim_org_sales.sales_org_name",
+              "nativeQueryRef": "sales_org_name",
               "active": true
             }
           ]
@@ -47,6 +47,32 @@
             }
           }
         }
+      ],
+      "items": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "header": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
@@ -54,7 +80,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "60a15a0102dc3446401c",
+        "name": "5fa4fa300e18860cc453",
         "field": {
           "Column": {
             "Expression": {
@@ -62,7 +88,7 @@
                 "Entity": "dw dim_org_sales"
               }
             },
-            "Property": "vkorg"
+            "Property": "sales_org_name"
           }
         },
         "type": "Categorical"

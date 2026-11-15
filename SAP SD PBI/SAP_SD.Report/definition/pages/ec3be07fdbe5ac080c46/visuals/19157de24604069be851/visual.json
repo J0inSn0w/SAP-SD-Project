@@ -23,13 +23,12 @@
                       "Entity": "dw dim_calendar"
                     }
                   },
-                  "Property": "month_name"
+                  "Property": "year_month"
                 }
               },
-              "queryRef": "dw dim_calendar.month_name",
-              "nativeQueryRef": "month",
-              "active": true,
-              "displayName": "month"
+              "queryRef": "dw dim_calendar.year_month",
+              "nativeQueryRef": "year_month",
+              "active": true
             }
           ]
         },
@@ -51,6 +50,23 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dw dim_calendar"
+                  }
+                },
+                "Property": "year_month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
@@ -120,6 +136,19 @@
             }
           }
         }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -130,6 +159,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cancelled Invoices by Month'"
                 }
               }
             }
@@ -156,7 +198,7 @@
         "type": "Advanced"
       },
       {
-        "name": "385f2d2091c13b070cc2",
+        "name": "14bbb984c0da695405ae",
         "field": {
           "Column": {
             "Expression": {
@@ -164,7 +206,7 @@
                 "Entity": "dw dim_calendar"
               }
             },
-            "Property": "month_name"
+            "Property": "year_month"
           }
         },
         "type": "Categorical"

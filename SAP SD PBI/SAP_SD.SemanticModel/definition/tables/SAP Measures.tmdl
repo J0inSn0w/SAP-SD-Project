@@ -19,17 +19,18 @@ table 'SAP Measures'
 
 	measure 'Returns MXN' =
 			
-			ABS(SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = -1),
-			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign]))
+			IF(NOT ISBLANK(ABS(SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = -1),
+			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign]))),ABS(SUMX(FILTER('dw fact_sales',NOT 'dw fact_sales'[is_cancelled] && 'dw fact_sales'[sign] = -1),
+			'dw fact_sales'[amount_mxn] * 'dw fact_sales'[sign])),0)
 		lineageTag: 5fc6c270-1cdb-4783-941b-895ef23b2852
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure '% Returns' = DIVIDE([Returns MXN],[Gross Sales MXN])
+	measure '% Returns' = DIVIDE([Returns MXN],[Gross Sales MXN],0)
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: fa7db294-a032-40fb-8b11-55dd913a7d9b
 
-	measure '# Invoices' = DISTINCTCOUNT('dw fact_sales'[vbeln])
+	measure '# Invoices' = CALCULATE(DISTINCTCOUNT('dw fact_sales'[vbeln]),'dw fact_sales'[fkart] = "F2",NOT 'dw fact_sales'[is_cancelled])
 		formatString: 0
 		lineageTag: aaa7b8fc-4c61-4356-9449-f3866793a700
 
@@ -42,9 +43,13 @@ table 'SAP Measures'
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure '% Cancelled' = DIVIDE( [# Cancelled], [# Invoices])
+	measure '% Cancelled' = DIVIDE( [# Cancelled], [# Total Invoices])
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 25ee1fd3-bed6-4e32-82bd-beafd5f800f6
+
+	measure '# Total Invoices' = CALCULATE(DISTINCTCOUNT('dw fact_sales'[vbeln]),'dw fact_sales'[fkart] = "F2")
+		formatString: 0
+		lineageTag: eb0361c7-8dca-4fe0-8abe-cb455d786c64
 
 	partition 'SAP Measures' = m
 		mode: import

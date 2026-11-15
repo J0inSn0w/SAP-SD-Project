@@ -23,11 +23,11 @@
                       "Entity": "dw dim_org_sales"
                     }
                   },
-                  "Property": "vkorg"
+                  "Property": "sales_org_name"
                 }
               },
-              "queryRef": "dw dim_org_sales.vkorg",
-              "nativeQueryRef": "vkorg",
+              "queryRef": "dw dim_org_sales.sales_org_name",
+              "nativeQueryRef": "sales_org_name",
               "active": true
             }
           ]
@@ -85,7 +85,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "4ff03d4cc324a04d9688",
+        "name": "d57538c5bab451307962",
         "field": {
           "Column": {
             "Expression": {
@@ -93,7 +93,7 @@
                 "Entity": "dw dim_org_sales"
               }
             },
-            "Property": "vkorg"
+            "Property": "sales_org_name"
           }
         },
         "type": "Categorical"

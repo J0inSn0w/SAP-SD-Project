@@ -23,42 +23,12 @@
                       "Entity": "dw dim_calendar"
                     }
                   },
-                  "Property": "year"
+                  "Property": "year_month"
                 }
               },
-              "queryRef": "dw dim_calendar.year",
-              "nativeQueryRef": "year",
-              "active": false
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "month_name"
-                }
-              },
-              "queryRef": "dw dim_calendar.month_name",
-              "nativeQueryRef": "month_name",
+              "queryRef": "dw dim_calendar.year_month",
+              "nativeQueryRef": "year_month",
               "active": true
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dw dim_calendar"
-                    }
-                  },
-                  "Property": "date"
-                }
-              },
-              "queryRef": "dw dim_calendar.date",
-              "nativeQueryRef": "date",
-              "active": false
             }
           ]
         },
@@ -109,15 +79,164 @@
                     "Entity": "dw dim_calendar"
                   }
                 },
-                "Property": "year"
+                "Property": "year_month"
               }
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
+    "objects": {
+      "legend": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "secLogAxisScale": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "secRoundRange": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "invertAxis": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "logAxisScale": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "roundRange": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignZeros": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "lineStyles": [
+        {
+          "properties": {
+            "lineChartType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'linear'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly Net Sales & Return Rate'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "132a5c80280c66308093",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "Net Sales MXN"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5b0468e940959b6b53ba",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SAP Measures"
+              }
+            },
+            "Property": "% Returns"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e8d0e18322070a63e6a2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dw dim_calendar"
+              }
+            },
+            "Property": "year_month"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

@@ -74,6 +74,22 @@ table 'dw dim_client'
 
 		annotation SummarizationSetBy = Automatic
 
+	column channel_name
+		dataType: string
+		lineageTag: 4c1a0d6e-b36d-47cc-a235-004ab8b140a3
+		summarizeBy: none
+		sourceColumn: channel_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_group_name
+		dataType: string
+		lineageTag: 3ce7739e-25d9-4b76-827e-2ee145e8fe21
+		summarizeBy: none
+		sourceColumn: customer_group_name
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'dw dim_client' = m
 		mode: import
 		source =
